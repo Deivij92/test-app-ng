@@ -1,0 +1,12 @@
+.logo {
+  height: 100px;
+}
+
+.navbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f1f1f1;
+  padding: 10px 20px;
+}
+

@@ -1,0 +1,24 @@
+.main-content {
+  display: flex;
+  min-height: 100vh; /* Para que el contenido ocupe al menos el 100% de la altura de la ventana */
+}
+
+.menu-container {
+  width: 200px; /* Ancho del menú */
+}
+
+.body-container {
+  flex-grow: 1;
+  padding: 20px; /* Espacio entre el menú y el contenido */
+}
+
+.content-wrapper {
+  margin-left: 20px; /* Espacio entre el menú y el contenido */
+}
+
+.footer-container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}

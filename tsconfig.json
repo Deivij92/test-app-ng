@@ -18,6 +18,11 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
+    "paths": {
+      "template-test-ng": [
+        "./dist/template-test-ng"
+      ]
+    },
     "lib": [
       "ES2022",
       "dom"

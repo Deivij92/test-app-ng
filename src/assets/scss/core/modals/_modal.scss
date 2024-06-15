@@ -1,0 +1,152 @@
+//
+// Modal
+//
+
+
+// Fluid modal
+
+.modal-fluid {
+    .modal-dialog {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    .modal-content {
+        border-radius: 0;
+    }
+}
+
+
+// Background color variations
+
+@each $color, $value in $theme-colors {
+    .modal-#{$color} {
+        @include modal-variant($value);
+    }
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 15px;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    -webkit-animation-duration: 0.35s;
+    animation-duration: 0.35s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+    z-index: 2;
+    overflow: hidden;
+    &.is-modal-active {
+        display: block;
+    }
+    .modal__dialog {
+        position: relative;
+        z-index: 22;
+        max-width: 600px;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        margin: 0 auto;
+        padding: 50px 15px;
+        background-color: #fff;
+        /* border-radius: 10px; */
+        height: 600px;
+        max-height: 100%;
+        border-radius: 16px;
+        .modal__close {
+            position: absolute;
+            top: -7px;
+            right: -32px;
+            border: none;
+            outline: none;
+            background: none;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        &:focus {
+            outline: 0;
+        }
+        .modal-content {
+            overflow: auto;
+            height: 100%;
+            padding: 0px 20px;
+            border: none !important;
+            h2 {
+                text-align: center;
+                color: #000;
+                font-family: "CoreSansBold";
+            }
+            p {
+                margin-bottom: 0;
+                font-size: 15px;
+                // text-align: justify;
+                color: #666767;
+            }
+            ul {
+                padding-left: 22px;
+                li {
+                    margin-bottom: 15px;
+                    font-size: 15px;
+                    // text-align: justify;
+                    color: #7B7B7B;
+                }
+            }
+        }
+    }
+
+    .modal__confirmation {
+        height: auto;
+        max-height: auto;
+        text-align: center;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        picture {
+            display: block;
+            text-align: center;
+            img {
+                width: 100px;
+            }
+        }
+        .modal-content {
+            height: auto;
+            h2 {
+                margin-top: 0;
+                font-size: 2.4rem;
+                color: #009A48;
+            }
+            p {
+                text-align: center;
+                font-size: 1.5rem;
+
+            }
+        }
+    }
+}
+
+
+/* Animation */
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

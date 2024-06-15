@@ -1,0 +1,111 @@
+//
+// Forms
+//
+
+
+// Labels
+
+.form-control-label {
+    color: $gray-700;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+}
+
+
+// Text inputs
+
+.form-control {
+    font-size: $input-btn-font-size;
+
+    &:focus {
+        &::placeholder {
+            color: $input-focus-placeholder-color;
+        }
+    }
+}
+
+
+// Textarea
+
+textarea[resize="none"] {
+    resize: none!important;
+}
+
+textarea[resize="both"] {
+    resize: both!important;
+}
+
+textarea[resize="vertical"] {
+    resize: vertical!important;
+}
+
+textarea[resize="horizontal"] {
+    resize: horizontal!important;
+}
+
+
+// Form input variations
+
+// Muted input
+
+.form-control-muted {
+    background-color: $input-muted-bg;
+    border-color: $input-muted-bg;
+    box-shadow: none;
+
+    &:focus {
+        background-color: $input-focus-muted-bg;
+    }
+}
+
+.no-active-login {
+    background-color: gray; /* Color de fondo gris */
+    color: white; /* Color de texto blanco */
+}
+.active-login {
+    background-color: #007eff; /* Color de fondo rojo */
+    color: white; /* Color de texto blanco */
+}
+.active-user {
+    background-color: #1fa2ff; /* Color de fondo rojo */
+    color: white; /* Color de texto blanco */
+}
+.active-user-register {
+    background-color: #1fa2ff; /* Color de fondo rojo */
+    color: white; /* Color de texto blanco */
+}
+
+.active-user-sell {
+    background-color: #1fa2ff; /* Color de fondo rojo */
+    color: white; /* Color de texto blanco */
+}
+
+.no-active-sell {
+    background-color: gray; /* Color de fondo gris */
+    color: white; /* Color de texto blanco */
+}
+
+.status-box-open{
+    color: #2dce89; /* Color de texto blanco */
+}
+.status-box-closet{
+    color: #fb4949; /* Color de texto blanco */
+}
+
+// Alternative input
+
+.form-control-alternative {
+    box-shadow: $input-alternative-box-shadow;
+    border: 5;
+    transition: box-shadow .15s ease;
+
+    &:focus {
+        box-shadow: $input-focus-alternative-box-shadow;
+    }
+}
+
+// Size variations: Fixes to the bootstrap defaults
+
+.form-control-lg {
+    font-size: $font-size-base;
+}
