@@ -25,4 +25,10 @@ export class ClienteService {
   crearReferencias(request: ReferenciasDto): Observable<ResponseDto>{
     return this.http.post<ResponseDto>(this.urlBackEnd +'add-referencias', request);
   }
+  guardarReferencias(referencias: ReferenciasDto[]): Observable<ResponseDto> {
+    debugger
+    // Realiza la solicitud HTTP para guardar las referencias en la base de datos
+    return this.http.post<ResponseDto>(this.urlBackEnd+ 'add-referencias', referencias);
+  }
+
 }

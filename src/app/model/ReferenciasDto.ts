@@ -6,5 +6,5 @@ export class ReferenciasDto {
   ciudad: string | undefined;
   telefono: string | undefined;
   parentezco: string | undefined;
-  idcliente: number | undefined;
+  idcliente: string | undefined;
 }
