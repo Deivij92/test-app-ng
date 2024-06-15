@@ -10,9 +10,10 @@ import {BodyComponent} from "../../projects/template-test-ng/src/lib/body/body.c
 import {MenuComponent} from "../../projects/template-test-ng/src/lib/menu/menu.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
+import { CommonModule } from "@angular/common";
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +26,8 @@ import { HttpClientModule } from "@angular/common/http";
     MenuComponent,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

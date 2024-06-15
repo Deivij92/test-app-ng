@@ -4,6 +4,7 @@ import {Cliente} from "../model/Cliente";
 import {ResponseDto} from "../model/ResponseDto";
 import { Observable } from 'rxjs';
 import {InfoLaboralClienteDto} from "../model/InfoLaboralClienteDto";
+import {ReferenciasDto} from "../model/ReferenciasDto";
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,10 @@ export class ClienteService {
   }
 
   crearInfoLaboral(request: InfoLaboralClienteDto): Observable<ResponseDto>{
-    debugger
     return this.http.post<ResponseDto>(this.urlBackEnd +'add-inf-lab', request);
   }
 
-  crearReferencias(){
-
+  crearReferencias(request: ReferenciasDto): Observable<ResponseDto>{
+    return this.http.post<ResponseDto>(this.urlBackEnd +'add-referencias', request);
   }
 }
