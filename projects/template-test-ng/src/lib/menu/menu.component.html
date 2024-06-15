@@ -12,24 +12,30 @@
     <div class="collapse navbar-collapse" id="sidenav-collapse-main">
       <ul class="navbar-nav flex-column"> <!-- Cambio importante: agregando la clase 'flex-column' -->
         <li class="nav-item">
-          <a class="nav-link" >
+          <a class="nav-link" routerLink="home">
             <i class="fa fa-home text-info"></i>
             <span class="nav-link-text "> Inicio</span>
           </a>
         </li>
         <hr class="my-3">
         <li class="nav-item">
-          <a class="nav-link">
-            <i class="fa fa-shopping-cart text-danger"></i>
-            <span class="nav-link-text "> Vender</span>
+          <a class="nav-link" routerLink="radicar">
+            <i class="fa fa-fast-forward text-success"></i>
+            <span class="nav-link-text "> Radicar</span>
           </a>
         </li>
         <hr class="my-3">
         <li class="nav-item">
-          <a class="nav-link"
-             data-toggle="collapse">
-            <i class="fa fa-database text-success"></i>
-            <span class="nav-link-text"> Catalogo</span>
+          <a class="nav-link" routerLink="prestamos">
+            <i class="fa fa-money-bill text-danger"></i>
+            <span class="nav-link-text "> Prestamos</span>
+          </a>
+        </li>
+        <hr class="my-3">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="clientes" data-toggle="collapse">
+            <i class="fa fa-users text-success"></i>
+            <span class="nav-link-text"> Clientes</span>
           </a>
         </li>
         <hr class="my-3">

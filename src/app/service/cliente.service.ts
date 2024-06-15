@@ -5,6 +5,8 @@ import {ResponseDto} from "../model/ResponseDto";
 import { Observable } from 'rxjs';
 import {InfoLaboralClienteDto} from "../model/InfoLaboralClienteDto";
 import {ReferenciasDto} from "../model/ReferenciasDto";
+import { LineaCreditoDto } from '../model/LineaCreditoDto';
+import {PrestamoDto} from "../model/PrestamoDto";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,10 @@ export class ClienteService {
     debugger
     // Realiza la solicitud HTTP para guardar las referencias en la base de datos
     return this.http.post<ResponseDto>(this.urlBackEnd+ 'add-referencias', referencias);
+  }
+
+  listarClientes(): Observable<Cliente[]>{
+    return this.http.post<Cliente[]>(this.urlBackEnd + 'listarcliente', null);
   }
 
 }

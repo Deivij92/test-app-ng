@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col">
+    <div class="card shadow">
+      <div class=" card-header border-0 "><h3 class=" mb-0">Lista de solictudes</h3></div>
+      <div class="table-responsive">
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+          <tr>
+            <th scope="col">Prestamo</th>
+            <th scope="col">Tipo prestamo</th>
+            <th scope="col">Monto del prestamo</th>
+            <th scope="col">Plazo (meses)</th>
+            <th scope="col">Estado del prestamo</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Fecha desembolso</th>
+            <th scope="col">Fecha solicitud</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (item of listPrestamos; track item){
+          <tr >
+              <td>{{ item.idPrestamo}}</td>
+              <td>{{ item.idlineaCredito}}</td>
+              <td>{{ item.monto }}</td>
+              <td>{{ item.plazo }}</td>
+              <td>{{item.estadoSolicitud}}</td>
+              <td>{{ item.idcliente}}</td>
+              <td>{{ item.descripcionCredito}}</td>
+              <td>{{ item.fechaDesembolso}}</td>
+              <td>{{ item.fechaSolicitud}}</td>
+          </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

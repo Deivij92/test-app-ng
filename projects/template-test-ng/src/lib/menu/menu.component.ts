@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 declare interface RouteInfo {
   path: string;
   title: string;
@@ -14,7 +14,9 @@ export const ROUTES: RouteInfo[] = [
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
