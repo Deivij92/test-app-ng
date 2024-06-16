@@ -16,7 +16,7 @@ export class PrestamosService {
     return this.http.post<LineaCreditoDto[]>(this.urlBackEnd + 'listarLineaCredito', null);
   }
   listarSolicitudes(): Observable<PrestamoDto[]>{
-    return this.http.post<PrestamoDto[]>(this.urlBackEnd + 'prestamoslist', null);
+    return this.http.get<PrestamoDto[]>(this.urlBackEnd + 'prestamoslist');
   }
 
   solicitaPrestamo(request: PrestamoDto): Observable<ResponseDto>{
