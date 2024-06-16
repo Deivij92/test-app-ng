@@ -28,8 +28,6 @@ export class ClienteService {
     return this.http.post<ResponseDto>(this.urlBackEnd +'add-referencias', request);
   }
   guardarReferencias(referencias: ReferenciasDto[]): Observable<ResponseDto> {
-    debugger
-    // Realiza la solicitud HTTP para guardar las referencias en la base de datos
     return this.http.post<ResponseDto>(this.urlBackEnd+ 'add-referencias', referencias);
   }
   listarClientes(): Observable<Cliente[]>{
@@ -42,6 +40,9 @@ export class ClienteService {
   obetnerReferencias(idcliente:number | undefined): Observable<ReferenciasDto[]>{
     return this.http.get<ReferenciasDto[]>(`${this.urlBackEnd}${idcliente}/referencias`);
   }
+  obetnerInfoReferencias(idref:number | undefined): Observable<ReferenciasDto>{
+    return this.http.get<ReferenciasDto>(`${this.urlBackEnd}referencia/${idref}`);
+  }
   obetnerInfoCliente(idcliente:number | undefined): Observable<Cliente>{
     return this.http.get<Cliente>(`${this.urlBackEnd}${idcliente}`);
   }
@@ -51,10 +52,19 @@ export class ClienteService {
   eliminarInfoLab(idlab:number | undefined): Observable<ResponseDto>{
     return this.http.delete<ResponseDto>(`${this.urlBackEnd}${idlab}/laboral`);
   }
+  eliminarInfoRef(idlab:number | undefined): Observable<ResponseDto>{
+    return this.http.delete<ResponseDto>(`${this.urlBackEnd}${idlab}/laboral`);
+  }
   updateInfoLaborar(request: InfoLaboralClienteDto): Observable<ResponseDto>{
     return this.http.post<ResponseDto>(this.urlBackEnd + 'updateinfolab',request);
   }
   updateInfoCliente(request: Cliente): Observable<ResponseDto>{
     return this.http.post<ResponseDto>(this.urlBackEnd + 'actualizar',request);
+  }
+  eliminarReferencia(idRef: number| undefined): Observable<ResponseDto> {
+    return this.http.delete<ResponseDto>(`${this.urlBackEnd}deleteref/${idRef}`);
+  }
+  actualizarReferencia(referencia: ReferenciasDto): Observable<ResponseDto> {
+    return this.http.put<ResponseDto>(`${this.urlBackEnd}updatereferencia`, referencia);
   }
 }

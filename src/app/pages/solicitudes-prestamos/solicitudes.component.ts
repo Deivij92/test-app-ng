@@ -245,6 +245,7 @@ export class SolicitudesComponent implements OnInit{
                 this.showAddRef = false;
                 this.showCredit = true;
                 this.isSave = false;
+                this.router.navigate(['/prestamos'])
               }, 5000);
             } else {
               this.mensajeInfo = response.messageResponse;

@@ -1,10 +1,11 @@
 export class ReferenciasDto {
-  tipoDocumento: string | undefined;
-  numeroDocumento: string | undefined;
-  nombresApellidos: string | undefined;
-  residencia: string | undefined;
-  ciudad: string | undefined;
-  telefono: string | undefined;
-  parentezco: string | undefined;
-  idcliente: string | undefined;
+  tipoDocumento?: string ;
+  numeroDocumento?: string ;
+  nombresApellidos?: string ;
+  residencia?: string ;
+  ciudad?: string ;
+  telefono?: string ;
+  parentezco?: string ;
+  idcliente?: string ;
+  idRef?: number ;
 }

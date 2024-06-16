@@ -18,15 +18,21 @@ import {ReferenciasDto} from "../../model/ReferenciasDto";
   styleUrl: './info-clientes.component.css'
 })
 export class InfoClientesComponent implements OnInit{
-  showAddLab : boolean =  false;
-  showTable : boolean =  true;
-  showTableRef : boolean =  false;
+  showAddLab :    boolean =  false;
+  showTable :     boolean =  true;
+  showTableRef :  boolean =  false;
   showAddCliente: boolean =  false;
-  isLoading : boolean =  false;
-  isSave : boolean =  false;
+  showARefInfo:   boolean =  false;
+  isLoading :     boolean =  false;
+  isSave :        boolean =  false;
   mensajeInfo?: string ;
   validateInfoLab: boolean = false;
+
+  cantReferencias: boolean = false;
+  mensajecantidadRe?: string;
+
   referencias : ReferenciasDto[] = [];
+  nuevaReferencia : ReferenciasDto[] = [];
   idCliente : string | any;
   infoLab: InfoLaboralClienteDto = {
     idInfoLab: undefined,
@@ -47,6 +53,17 @@ export class InfoClientesComponent implements OnInit{
     ciudad: '',              // Ciudad inicializado como cadena vacía
     telefono: '',            // Teléfono inicializado como cadena vacía
     email: ''                 // Email inicializado como cadena vacía
+  };
+  infoRefencia: ReferenciasDto = {
+    tipoDocumento: '',
+    numeroDocumento: '',
+    nombresApellidos: '',
+    residencia: '',
+    ciudad: '',
+    telefono: '',
+    parentezco: '',
+    idcliente: '',
+    idRef : 0
   };
 
   clienteList : Cliente[] = [];
@@ -104,6 +121,22 @@ export class InfoClientesComponent implements OnInit{
       }
     )
   }
+  ObtenerInfoReferencia(idcliente: number | undefined){
+    debugger
+    this.service.obetnerInfoReferencias(idcliente).subscribe(
+      (ref: ReferenciasDto) =>{
+        this.infoRefencia = ref;
+        this.showAddLab =  false;
+        this.showTable =  false;
+        this.showTableRef =  false;
+        this.showAddCliente =  false;
+        this.showARefInfo =  true;
+      },
+      error => {
+        console.error('Error al obtener la información laboral del cliente', error);
+      }
+    )
+  }
   updateInfoLaboral(request: any){
     debugger
     let dataSendInfoLab = new InfoLaboralClienteDto();
@@ -124,6 +157,35 @@ export class InfoClientesComponent implements OnInit{
               this.showAddLab = false;
               this.showAddCliente =  false
               this.isSave = false;
+              location.reload()
+            }, 3000);
+          } else {
+            this.isSave = true;
+            this.mensajeInfo = response.messageResponse
+          }
+        }, 3000);
+      }
+    )
+  }
+  updateReferencias(request: any){
+    debugger
+    let dataSend = new ReferenciasDto();
+    dataSend= request;
+    this.service.actualizarReferencia(dataSend).subscribe(
+      (response: ResponseDto) =>{
+        this.isLoading = true;
+        this.isSave = true;
+        this.mensajeInfo = 'Actualizando...';
+        // Mostrar el mensaje por 8 segundos
+        setTimeout(() => {
+          if (response.codeResponse === 200) {
+            this.isSave = true;
+            this.mensajeInfo = response.messageResponse
+            setTimeout(() => {
+              this.isLoading = false;
+              this.showARefInfo = false
+              this.isSave = false;
+              location.reload()
             }, 3000);
           } else {
             this.isSave = true;
@@ -216,10 +278,46 @@ export class InfoClientesComponent implements OnInit{
       }
     )
   }
-  obtenerReferencias(idcliente:any): void {
+  ElimianRefer(idlab: number | undefined){
+    debugger
+    this.service.eliminarReferencia(idlab).subscribe(
+      (response: ResponseDto) =>{
+        this.isLoading = true;
+        this.isSave = true;
+        this.mensajeInfo = 'Eliminando referencia...';
+        // Mostrar el mensaje por 8 segundos
+        setTimeout(() => {
+          if (response.codeResponse === 200) {
+            this.isSave = true;
+            this.mensajeInfo = response.messageResponse
+            setTimeout(() => {
+              this.isLoading = false;
+              this.showTable =  true
+              this.showAddLab = false;
+              this.showAddCliente =  false
+              this.isSave = false;
+              location.reload()
+            }, 3000);
+          } else {
+            this.isSave = true;
+            this.mensajeInfo = response.messageResponse
+          }
+        }, 3000);
+      }
+    )
+  }
+  listarRefrencias(idcliente:any): void {
+    this.idCliente = idcliente;
     this.service.obetnerReferencias(idcliente).subscribe(
       (data: ReferenciasDto[]) => {
         this.referencias = data;
+        if (this.referencias.length < 4){
+          this.cantReferencias  = true;
+          this.mensajecantidadRe = 'Se ha listado ' + this.referencias.length+' de 4, debes completarlas'
+        }else {
+          this.cantReferencias  = false;
+          this.mensajecantidadRe = 'Se ha listado ' + this.referencias.length+' de 4, referencias'
+        }
         this.showAddLab =  false;
         this.showTable =  false;
         this.showAddCliente =  false;
@@ -230,6 +328,7 @@ export class InfoClientesComponent implements OnInit{
       }
     );
   }
+
   onSubmitLab(infoLaboral: any) {
     debugger
     let dataSendInfoLab = new InfoLaboralClienteDto();
@@ -272,13 +371,73 @@ export class InfoClientesComponent implements OnInit{
       this.mensajeInfo = 'por favor valida que todos los campos esten diligenciados';
     }
   }
+  agregarReferencia() {
+    debugger;
+    // Asegúrate de que `infoRefencia` tenga el campo `idcliente`
+    this.infoRefencia.idcliente = this.idCliente;
+
+    // Agrega la nueva referencia a la lista
+    this.nuevaReferencia.push(this.infoRefencia);
+  }
+  crearinfoRefencia(referencia: any) {
+    debugger
+    let dataSendInfoLab = new ReferenciasDto();
+    dataSendInfoLab = referencia;
+    if(this.ifForrmValidRef()){
+    this.service.guardarReferencias(this.nuevaReferencia)
+      .subscribe(
+        (response: ResponseDto) => {
+          this.isLoading = true;
+          this.isSave = true;
+          this.mensajeInfo = 'Guardando...';
+          // Mostrar el mensaje por 8 segundos
+          setTimeout(() => {
+            if (response.codeResponse === 200) {
+              this.mensajeInfo = response.messageResponse
+              setTimeout(() => {
+                this.isLoading = false;
+                this.showAddLab = false;
+                this.showTable = true
+                this.showTableRef = false
+                this.showARefInfo = false
+                this.isSave = false;
+                location.reload()
+              }, 3000);
+            } else {
+              this.isLoading = false;
+              this.isSave = true;
+              this.mensajeInfo = response.messageResponse
+            }
+          }, 3000);
+          console.log('Referencias guardadas en la base de datos:', this.referencias);
+        },
+        error => {
+          this.isSave = true;
+          this.mensajeInfo = error;
+          console.error('Error al guardar referencias:', error);
+          // Manejar el error según sea necesario
+        }
+      );
+  }else {
+        this.isSave = true;
+        this.mensajeInfo = 'por favor valida que todos los campos esten diligenciados';
+      }
+  }
   cancelar(){
-    this.showTable =  true
-    this.showAddLab = false;
-    this.showAddCliente =  false
+    location.reload()
+  }
+  addNewRefencia(){
+    this.showTableRef = false,
+      this.showARefInfo = true;
   }
   isFormValidLab(): boolean{
     return !!this.infoLab.telefono && !!this.infoLab.cargo && !!this.infoLab.direccion && !!this.infoLab.nitEmpresa &&
       !!this.infoLab.nombreEmpresa &&   !!this.infoLab.fechaVinculacion;
+  }
+  ifForrmValidRef(): boolean{
+    return !!this.infoRefencia.parentezco && !!this.infoRefencia.nombresApellidos
+      && !!this.infoRefencia.tipoDocumento && !!this.infoRefencia.numeroDocumento
+      && !!this.infoRefencia.telefono && !!this.infoRefencia.ciudad
+      && !!this.infoRefencia.residencia
   }
 }
