@@ -22,13 +22,13 @@
           <tr >
               <td>{{ item.idPrestamo}}</td>
               <td>{{ item.idlineaCredito}}</td>
-              <td>{{ item.monto }}</td>
-              <td>{{ item.plazo }}</td>
+            <td>{{ item.monto | currency:'COP ':'symbol':'1.0-0' }}</td>
+            <td>{{ item.plazo }}</td>
               <td>{{item.estadoSolicitud}}</td>
               <td>{{ item.idcliente}}</td>
               <td>{{ item.descripcionCredito}}</td>
-              <td>{{ item.fechaDesembolso}}</td>
-              <td>{{ item.fechaSolicitud}}</td>
+              <td>{{ item.fechaDesembolso| date:'yyyy-MM-dd' }}</td>
+              <td>{{ item.fechaSolicitud| date:'yyyy-MM-dd' }}</td>
           </tr>
             }
           </tbody>

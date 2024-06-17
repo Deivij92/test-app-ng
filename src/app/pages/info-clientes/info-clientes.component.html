@@ -20,6 +20,11 @@
           </tr>
           </thead>
           <tbody>
+            @if(clienteList.length === 0){
+              <tr>
+                <td colspan="8" class="text-center">No hay cliente registrados</td>
+              </tr>
+            }
             @for (item of clienteList; track item){
               <tr >
                 <td>{{ item.id}}</td>
@@ -49,6 +54,12 @@
                                     <span title="Eliminar venta">
                                         <i class="fas fa-eye" style="font-size: 15px;"></i>
                                     </span> Cliente
+                  </button>
+                  <button class="btn my-4 btn-outline-warning btn-sm" type="submit" style="margin-right: 8px"
+                          (click)="listarPrestamos(item.id)">
+                                    <span title="Eliminar venta">
+                                        <i class="fas fa-money-bill" style="font-size: 15px;"></i>
+                                    </span> Prestamos
                   </button>
                 </td>
               </tr>
@@ -288,6 +299,11 @@
               </tr>
               </thead>
               <tbody>
+                @if(referencias.length === 0){
+                  <tr>
+                    <td colspan="8" class="text-center">No hay prestamos para el cliente</td>
+                  </tr>
+                }
                 @for (item of referencias; track item){
                   <tr >
                     <td>{{ item.nombresApellidos}}</td>
@@ -342,7 +358,133 @@
     </div>
   }
 
-  @if(showARefInfo){
+  @if (showTablePres) {
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <div class=" card-header border-0 "><h3 class=" mb-0">Prestamos del cliente</h3></div>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+              <tr>
+                <th scope="col">Prestamo</th>
+                <th scope="col">Tipo prestamo</th>
+                <th scope="col">Monto del prestamo</th>
+                <th scope="col">Plazo (meses)</th>
+                <th scope="col">Estado del prestamo</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Fecha desembolso</th>
+                <th scope="col">Fecha solicitud</th>
+              </tr>
+              </thead>
+              <tbody>
+                @if(prestamos.length === 0){
+                  <tr>
+                    <td colspan="8" class="text-center"><strong>No hay prestamos para el cliente </strong>
+                      <button class="btn my-4 btn-outline-primary btn-sm"
+                              type="submit" style="margin-right: 8px"
+                            (click)="ShowNuevoPrestamo()">
+                                    <span title="Editar categoria">
+                                        <i class="fas fa-eye" style="font-size: 15px;"></i>
+                                    </span> Crear nuevo prestamo
+                      </button>
+                    </td>
+                  </tr>
+                }
+                @for (item of prestamos; track item){
+                    <tr >
+                      <td>{{ item.idPrestamo}}</td>
+                      <td>{{ item.idlineaCredito}}</td>
+                      <td>{{ item.monto | currency:'COP ':'symbol':'1.0-0' }}</td>
+                      <td>{{ item.plazo }}</td>
+                      <td>{{item.estadoSolicitud}}</td>
+                      <td>{{ item.idcliente}}</td>
+                      <td>{{ item.descripcionCredito}}</td>
+                      <td>{{ item.fechaDesembolso| date:'yyyy-MM-dd' }}</td>
+                      <td>{{ item.fechaSolicitud | date:'yyyy-MM-dd' }}</td>
+                    </tr>
+                }
+              </tbody>
+            </table>
+            @if (isLoading) {
+              <div class="text-center">
+                <i class="fas fa-spinner fa-spin"></i>
+              </div>
+            }
+            @if (isSave) {
+              <div class="text-center">
+                <a style="font-size: 25px"><strong>{{ mensajeInfo }}</strong></a>
+              </div>
+            }
+            <div class="text-center mt-3">
+              <button type="button" class="btn btn-outline-danger my-4 ml-2" style="margin-right: 8px"
+                      (click)="cancelar()"
+              >Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (showCredit) {
+    <div class="card-body bg-white">
+      <h6 class="heading-small mb-4">Informacion para el credito, los campos marcados con (*) son obligatorios</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="input-last-name"> Linea de credito (*)</label>
+              <select id="input-rol" class="form-control form-control-alternative"
+                      [(ngModel)]="prestamoDto.idlineaCredito"
+                      name="tipoDocumento">
+                @for (linea of lineaCreditList; track linea.idLineaCredito){
+                  <option [value]="linea.idLineaCredito"> {{ linea.nombreLineaCredito }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="monto"> Numero de cuotas (*)</label>
+              <input type="number" id="monto" class="form-control form-control-alternative" [(ngModel)]="prestamoDto.plazo" name="monto">
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="monto"> Monto a solicitar : <strong>Entre $100.000 y $5.000.000</strong> (*)</label>
+              <input type="number" id="monto" class="form-control form-control-alternative" [(ngModel)]="prestamoDto.monto" name="monto">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label class="form-control-label" for="monto">  <strong>Descripcion el credito solicitado (*)</strong></label>
+            <input type="text" id="monto" class="form-control form-control-alternative" [(ngModel)]="prestamoDto.descripcionCredito" name="monto">
+          </div>
+        </div>
+      </div>
+      @if(isLoading){
+        <div class="text-center">
+          <i class="fas fa-spinner fa-spin"></i>
+        </div>
+      }
+      @if(isSave){
+        <div class="text-center">
+          <a style="font-size: 25px"><strong>{{ mensajeInfo }}</strong></a>
+        </div>
+      }
+      <div class="text-center mt-3">
+
+        <button type="button" class="btn btn-outline-success my-4 ml-2" (click)="onSubmitSolicitudPrestamo(prestamoDto)"
+                [disabled]="!ifFormSolCredito()" >Solicitar credito </button>
+      </div>
+    </div>
+  }
+
+  @if (showARefInfo) {
   <div class="card-body bg-white">
     <h6 class="heading-small text-muted mb-4">Referencias Personales, los campos marcados con (*) son obligatorios</h6>
     <br>
@@ -458,7 +600,6 @@
                   [disabled]="!ifForrmValidRef()" (click)="updateReferencias(infoRefencia)" >Actualizar Referencia
           </button>
         }
-
       </div>
   </div>
   }

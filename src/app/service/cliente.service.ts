@@ -40,6 +40,9 @@ export class ClienteService {
   obetnerReferencias(idcliente:number | undefined): Observable<ReferenciasDto[]>{
     return this.http.get<ReferenciasDto[]>(`${this.urlBackEnd}${idcliente}/referencias`);
   }
+  obetnerPrestamos(idcliente:number | undefined): Observable<PrestamoDto[]>{
+    return this.http.get<PrestamoDto[]>(`${this.urlBackEnd}${idcliente}/prestamos`);
+  }
   obetnerInfoReferencias(idref:number | undefined): Observable<ReferenciasDto>{
     return this.http.get<ReferenciasDto>(`${this.urlBackEnd}referencia/${idref}`);
   }

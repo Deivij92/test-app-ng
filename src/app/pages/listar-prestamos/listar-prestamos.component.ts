@@ -5,11 +5,15 @@ import {FormBuilder} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ClienteService} from "../../service/cliente.service";
 import {PrestamosService} from "../../service/prestamos.service";
+import {CurrencyPipe, DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-listar-prestamos',
   standalone: true,
-  imports: [],
+  imports: [
+    DatePipe,
+    CurrencyPipe
+  ],
   templateUrl: './listar-prestamos.component.html',
   styleUrl: './listar-prestamos.component.css'
 })

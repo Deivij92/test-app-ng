@@ -31,7 +31,7 @@
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-first-name">Numero de documento (*)</label>
-                    <input type="text"
+                    <input type="number"
                            class="form-control form-control-alternative"
                            [(ngModel)]="clienteDto.numeroDocumento"
                            name="numeroDocumento"> <!-- Agrega el atributo name -->
@@ -114,7 +114,7 @@
               <div class="col-lg-4">
                 <div class="form-group">
                   <label for="nitEmpresa">NIT Empresa (*)</label>
-                  <input type="text" class="form-control" id="nitEmpresa"
+                  <input type="number" class="form-control" id="nitEmpresa"
                          [(ngModel)]="infoLab.nitEmpresa"
                          name="nitEmpresa">
                 </div>
@@ -187,11 +187,14 @@
             @for (ref of referencias; track  ref.idcliente) {
               <div class="card-body">
                 <div class="row">
-                  <div class="col-sm-6">
+                  <div class="col-sm-4">
                     <h5 class="card-title">{{ ref.nombresApellidos }}</h5>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-4">
                     <h5 class="card-text">Parentesco: {{ ref.parentezco }}</h5>
+                  </div>
+                  <div class="col-sm-4">
+                    <h5 class="card-text">Docuemento: {{ ref.numeroDocumento }}</h5>
                   </div>
                 </div>
                 <!-- Aquí puedes agregar más detalles si los tienes -->
@@ -219,7 +222,7 @@
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-first-name">Numero de documento (*)</label>
-                        <input type="text"
+                        <input type="number"
                                class="form-control form-control-alternative"
                                [(ngModel)]="nuevaReferencia.numeroDocumento"
                                name="numeroDocumento"> <!-- Agrega el atributo name -->

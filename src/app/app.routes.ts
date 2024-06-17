@@ -5,7 +5,7 @@ import {ListarPrestamosComponent} from "./pages/listar-prestamos/listar-prestamo
 import {InfoClientesComponent} from "./pages/info-clientes/info-clientes.component";
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: 'radicar', pathMatch: 'full' },
   { path: 'radicar', component: SolicitudesComponent },
   { path: 'prestamos', component: ListarPrestamosComponent },
   { path: 'clientes', component: InfoClientesComponent },

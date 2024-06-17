@@ -22,6 +22,8 @@ import {PrestamoDto} from "../../model/PrestamoDto";
 export class SolicitudesComponent implements OnInit{
   form: FormGroup | undefined;
   clienteDto : Cliente = new Cliente();
+  emailValido: boolean = true;
+
   infoLab: InfoLaboralClienteDto =  new InfoLaboralClienteDto();
   referencias : ReferenciasDto[] = [];
 
@@ -279,7 +281,6 @@ export class SolicitudesComponent implements OnInit{
       && !!this.nuevaReferencia.telefono && !!this.nuevaReferencia.ciudad
       && !!this.nuevaReferencia.residencia
   }
-
   listarLineaProductos(): void {
     this.servicePrestamos.listarPrestamos().subscribe(
       (response: LineaCreditoDto[]) => {
