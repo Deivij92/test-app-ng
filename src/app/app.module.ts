@@ -16,6 +16,8 @@ import { CommonModule } from "@angular/common";
     AppComponent
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     RouterModule,
     AppRoutingModule,
@@ -24,8 +26,6 @@ import { CommonModule } from "@angular/common";
     FooterComponent,
     BodyComponent,
     MenuComponent,
-    FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
     CommonModule
   ],

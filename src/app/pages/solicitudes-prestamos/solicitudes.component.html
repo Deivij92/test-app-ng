@@ -5,21 +5,29 @@
         <!-- Agregamos el estilo inline para hacer el fondo transparente -->
         <div class="card-header bg-white border-0">
           <div class="row align-items-center">
-            <div class="col-8">
+            <div class="col-10">
               <h3 class="mb-0">Solicitud de productos</h3>
+            </div>
+            <div class="col-2">
+              <button class="btn btn-success mr-2 text-white" (click)="pageListCustomer()">
+                <i class="fa fa-users " ></i>
+                Regresar a lista de clientes
+              </button>
             </div>
           </div>
         </div>
         @if (showAddCliente) {
           <div class="card-body bg-white">
             <h6 class="heading-small mb-4">Información de cliente, los campos marcados con (*) son obligatorios</h6>
+            <form #userForm="ngForm" [formGroup]="form" (ngSubmit)="userForm.form.valid && onSubmitCliente(clienteDto)">
             <div class="pl-lg-4">
               <div class="row">
+
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-last-name">Tipo de documento (*)</label>
                     <select id="input-rol" class="form-control form-control-alternative"
-                            [(ngModel)]="clienteDto.tipoDocumento"
+                            [(ngModel)]="clienteDto.tipoDocumento" formControlName="tipoDocumento"
                             name="tipoDocumento">
                       <option value="CC">Cedula de ciudadania</option>
                       <option value="CE">Cedula de extanjeria</option>
@@ -27,25 +35,37 @@
                       <option value="TI">Tarjeta de identidad</option>
                     </select>
                   </div>
+                    @if (form.get('tipoDocumento').errors &&  form.get('tipoDocumento').hasError('required') &&
+                    (form.get('tipoDocumento').dirty || form.get('tipoDocumento').touched)) {
+                    <label class="text-danger text-center">Este campo es obligatorio</label>
+                    }
+
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-first-name">Numero de documento (*)</label>
                     <input type="number"
-                           class="form-control form-control-alternative"
+                           class="form-control form-control-alternative" formControlName="numeroDocumento"
                            [(ngModel)]="clienteDto.numeroDocumento"
                            name="numeroDocumento"> <!-- Agrega el atributo name -->
                   </div>
-
+                    @if (form.get('numeroDocumento').errors &&  form.get('numeroDocumento').hasError('required') &&
+                    (form.get('numeroDocumento').dirty || form.get('numeroDocumento').touched)) {
+                      <label class="text-danger text-center">Este campo es obligatorio</label>
+                    }
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-last-name">Nombres y apellidos (*)</label>
                     <input type="text" id="input-last-name"
-                           class="form-control form-control-alternative"
+                           class="form-control form-control-alternative" formControlName="apellidos"
                            [(ngModel)]="clienteDto.apellidos"
                            name="apellidos">
                   </div>
+                  @if (form.get('apellidos').errors &&  form.get('apellidos').hasError('required') &&
+                  (form.get('apellidos').dirty || form.get('apellidos').touched)) {
+                    <label class="text-danger text-center">Este campo es obligatorio</label>
+                  }
                 </div>
               </div>
               <div class="row">
@@ -53,38 +73,56 @@
                   <div class="form-group">
                     <label class="form-control-label" for="input-first-name">Direccion residencia (*)</label>
                     <input type="text"
-                           class="form-control form-control-alternative"
+                           class="form-control form-control-alternative" formControlName="residencia"
                            [(ngModel)]="clienteDto.residencia"
                            name="residencia">
                   </div>
+                  @if (form.get('residencia').errors &&  form.get('residencia').hasError('required') &&
+                  (form.get('residencia').dirty || form.get('residencia').touched)) {
+                    <label class="text-danger text-center">Este campo es obligatorio</label>
+                  }
                 </div>
                 <div class="col-lg-3">
                   <div class="form-group">
                     <label class="form-control-label" for="input-first-name">Ciudad (*)</label>
                     <input type="text"
-                           class="form-control form-control-alternative"
+                           class="form-control form-control-alternative" formControlName="ciudad"
                            [(ngModel)]="clienteDto.ciudad"
                            name="ciudad">
                   </div>
+                  @if (form.get('ciudad').errors &&  form.get('ciudad').hasError('required') &&
+                  (form.get('ciudad').dirty || form.get('ciudad').touched)) {
+                    <label class="text-danger text-center">Este campo es obligatorio</label>
+                  }
                 </div>
                 <div class="col-lg-3">
                   <div class="form-group">
                     <label class="form-control-label" for="input-first-name">Telefono (*)</label>
                     <input type="text"
-                           class="form-control form-control-alternative"
+                           class="form-control form-control-alternative" formControlName="telefono"
                            [(ngModel)]="clienteDto.telefono"
-                           name="telefono"
-                    >
+                           name="telefono">
                   </div>
+                  @if (form.get('telefono').errors &&  form.get('telefono').hasError('required') &&
+                  (form.get('telefono').dirty || form.get('telefono').touched)) {
+                    <label class="text-danger text-center">Este campo es obligatorio </label>
+                  }
                 </div>
                 <div class="col-lg-3">
                   <div class="form-group">
                     <label class="form-control-label" for="input-first-name">Correo electronico (*)</label>
                     <input type="email"
-                           class="form-control form-control-alternative"
+                           class="form-control form-control-alternative" formControlName="email"
                            [(ngModel)]="clienteDto.email"
                            name="email">
                   </div>
+                  @if (form.get('email').hasError('required') &&
+                  (form.get('email').dirty || form.get('email').touched)) {
+                    <label class="text-danger text-center">Este campo es obligatorio </label>
+                  }
+                  @if (form.get('email').errors){
+                    <label class="text-danger text-center">El formato del email es inválido.</label>
+                  }
                 </div>
               </div>
             </div>
@@ -99,65 +137,98 @@
               </div>
             }
             <div class="text-center mt-3">
-              <button type="button" class="btn btn-success my-4 ml-2" (click)="onSubmitCliente(clienteDto)"
-                      [disabled]="!isFormValidCliente()">Guardar cliente y continuar
+              <button type="submit" class="btn btn-success my-4 ml-2" (click)="userForm.onSubmit(form)"
+                      [disabled]="!userForm.form.valid">Guardar cliente y continuar
               </button>
             </div>
+            </form>
           </div>
         }
 
         @if (showAddLab) {
+          <form #labForm="ngForm" [formGroup]="formInfLabo" (ngSubmit)="labForm.form.valid && onSubmitLab(infoLab)">
           <div class="card-body bg-white">
             <!-- Info laboral -->
             <h6 class="heading-small text-muted mb-4">Información laboral, los campos marcados con (*) son obligatorios</h6>
+
             <div class="row">
               <div class="col-lg-4">
                 <div class="form-group">
                   <label for="nitEmpresa">NIT Empresa (*)</label>
                   <input type="number" class="form-control" id="nitEmpresa"
+                         formControlName="nitEmpresa"
                          [(ngModel)]="infoLab.nitEmpresa"
                          name="nitEmpresa">
                 </div>
+                @if (formInfLabo.get('nitEmpresa').errors &&  formInfLabo.get('nitEmpresa').hasError('required') &&
+                (formInfLabo.get('nitEmpresa').dirty || formInfLabo.get('nitEmpresa').touched)) {
+                  <label class="text-danger text-center">Este campo es obligatorio</label>
+                }
               </div>
               <div class="col-lg-4">
                 <div class="form-group">
                   <label for="nombreEmpresa">Nombre Empresa (*)</label>
                   <input type="text" class="form-control" id="nombreEmpresa"
                          [(ngModel)]="infoLab.nombreEmpresa"
+                         formControlName="nombreEmpresa"
                          name="nombreEmpresa">
                 </div>
+                @if (formInfLabo.get('nombreEmpresa').errors &&  formInfLabo.get('nombreEmpresa').hasError('required') &&
+                (formInfLabo.get('nombreEmpresa').dirty || formInfLabo.get('nombreEmpresa').touched)) {
+                  <label class="text-danger text-center">Este campo es obligatorio</label>
+                }
               </div>
               <div class="col-lg-4">
                 <div class="form-group">
                   <label for="direccion">Dirección (*)</label>
                   <input type="text" class="form-control" id="direccion"
                          [(ngModel)]="infoLab.direccion"
+                         formControlName="direccion"
                          name="direccion">
                 </div>
+                @if (formInfLabo.get('direccion').errors &&  formInfLabo.get('direccion').hasError('required') &&
+                (formInfLabo.get('direccion').dirty || formInfLabo.get('direccion').touched)) {
+                  <label class="text-danger text-center">Este campo es obligatorio</label>
+                }
               </div>
             </div>
             <div class="row">
               <div class="col-lg-4">
                 <div class="form-group">
                   <label for="telefono">Teléfono (*)</label>
-                  <input type="text" class="form-control" id="telefono"
+                  <input type="number" class="form-control" id="telefono"
+                         formControlName="telefono"
                          [(ngModel)]="infoLab.telefono" name="telefono">
                 </div>
+                @if (formInfLabo.get('telefono').errors &&  formInfLabo.get('telefono').hasError('required') &&
+                (formInfLabo.get('telefono').dirty || formInfLabo.get('telefono').touched)) {
+                  <label class="text-danger text-center">Este campo es obligatorio</label>
+                }
               </div>
               <div class="col-lg-4">
                 <div class="form-group">
                   <label for="cargo">Cargo (*)</label>
                   <input type="text" class="form-control" id="cargo"
+                         formControlName="cargo"
                          [(ngModel)]="infoLab.cargo" name="cargo">
                 </div>
+                @if (formInfLabo.get('cargo').errors &&  formInfLabo.get('cargo').hasError('required') &&
+                (formInfLabo.get('cargo').dirty || formInfLabo.get('cargo').touched)) {
+                  <label class="text-danger text-center">Este campo es obligatorio</label>
+                }
               </div>
               <div class="col-lg-4">
                 <div class="form-group">
                   <label for="fechaVinculacion">Fecha Vinculación (*)</label>
                   <input type="date" class="form-control" id="fechaVinculacion"
+                         formControlName="fechaVinculacion"
                          [(ngModel)]="infoLab.fechaVinculacion"
                          name="fechaVinculacion">
                 </div>
+                @if (formInfLabo.get('fechaVinculacion').errors &&  formInfLabo.get('fechaVinculacion').hasError('required') &&
+                (formInfLabo.get('fechaVinculacion').dirty || formInfLabo.get('fechaVinculacion').touched)) {
+                  <label class="text-danger text-center">Este campo es obligatorio</label>
+                }
               </div>
             </div>
             @if (isLoading) {
@@ -173,19 +244,22 @@
             <!-- info laboral -->
             <div class="text-center mt-3">
 
-              <button type="button" class="btn btn-outline-success my-4 ml-2"
-                      [disabled]="!isFormValidLab()" (click)="onSubmitLab(infoLab)">Guardar y continuar
+              <button type="submit" class="btn btn-success my-4 ml-2"
+                      [disabled]="!labForm.valid">Guardar y continuar
               </button>
             </div>
           </div>
+          </form>
         }
 
         @if (showAddRef) {
           <div class="card-body bg-white">
-            <h6 class="heading-small text-muted mb-4">Referencias Personales, los campos marcados con (*) son obligatorios</h6>
-
+            @if (referencias.length != 0){
+              <h6 class="heading-small text-muted mb-4">Agregada {{referencias.length}} referencia de 4</h6>
+            }
             @for (ref of referencias; track  ref.idcliente) {
-              <div class="card-body">
+
+              <div class="card-body border">
                 <div class="row">
                   <div class="col-sm-4">
                     <h5 class="card-title">{{ ref.nombresApellidos }}</h5>
@@ -194,7 +268,7 @@
                     <h5 class="card-text">Parentesco: {{ ref.parentezco }}</h5>
                   </div>
                   <div class="col-sm-4">
-                    <h5 class="card-text">Docuemento: {{ ref.numeroDocumento }}</h5>
+                    <h5 class="card-text">Documento: {{ ref.numeroDocumento }}</h5>
                   </div>
                 </div>
                 <!-- Aquí puedes agregar más detalles si los tienes -->
@@ -203,6 +277,8 @@
             <br>
             <!-- Info laboral -->
             @if (refCompletas) {
+              <h6 class="heading-small text-muted mb-4">Referencias Personales, los campos marcados con (*) son obligatorios</h6>
+              <form #refForm="ngForm" [formGroup]="formRef" (ngSubmit)="refForm.form.valid && agregarReferencia()">
               <div class="row">
                 <div class="pl-lg-4">
                   <div class="row">
@@ -210,24 +286,34 @@
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Tipo de documento (*)</label>
                         <select id="input-rol" class="form-control form-control-alternative"
+                                formControlName="tipoDocumento"
                                 [(ngModel)]="nuevaReferencia.tipoDocumento"
                                 name="tipoDocumento">
+                          <option value=""></option>
                           <option value="CC">Cedula de ciudadania</option>
                           <option value="CE">Cedula de extanjeria</option>
                           <option value="NIT">Numero Identificacionh Tributaria</option>
                           <option value="TI">Tarjeta de identidad</option>
                         </select>
                       </div>
+                      @if (formRef.get('tipoDocumento').errors &&  formRef.get('tipoDocumento').hasError('required') &&
+                      (formRef.get('tipoDocumento').dirty || formRef.get('tipoDocumento').touched)) {
+                        <label class="text-danger text-center">Este campo es obligatorio </label>
+                      }
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-first-name">Numero de documento (*)</label>
                         <input type="number"
                                class="form-control form-control-alternative"
+                               formControlName="numeroDocumento"
                                [(ngModel)]="nuevaReferencia.numeroDocumento"
                                name="numeroDocumento"> <!-- Agrega el atributo name -->
                       </div>
-
+                      @if (formRef.get('numeroDocumento').errors &&  formRef.get('numeroDocumento').hasError('required') &&
+                      (formRef.get('numeroDocumento').dirty || formRef.get('numeroDocumento').touched)) {
+                        <label class="text-danger text-center">Este campo es obligatorio </label>
+                      }
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
@@ -235,8 +321,13 @@
                         <input type="text" id="input-last-name"
                                class="form-control form-control-alternative"
                                [(ngModel)]="nuevaReferencia.nombresApellidos"
+                               formControlName="nombresApellidos"
                                name="nombresApellidos">
                       </div>
+                      @if (formRef.get('nombresApellidos').errors &&  formRef.get('nombresApellidos').hasError('required') &&
+                      (formRef.get('nombresApellidos').dirty || formRef.get('nombresApellidos').touched)) {
+                        <label class="text-danger text-center">Este campo es obligatorio </label>
+                      }
                     </div>
                   </div>
                   <div class="row">
@@ -245,34 +336,50 @@
                         <label class="form-control-label" for="input-first-name">Direccion residencia (*) </label>
                         <input type="text"
                                class="form-control form-control-alternative"
+                               formControlName="residencia"
                                [(ngModel)]="nuevaReferencia.residencia"
                                name="residencia">
                       </div>
+                      @if (formRef.get('residencia').errors &&  formRef.get('residencia').hasError('required') &&
+                      (formRef.get('residencia').dirty || formRef.get('residencia').touched)) {
+                        <label class="text-danger text-center">Este campo es obligatorio </label>
+                      }
                     </div>
                     <div class="col-lg-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-first-name">Ciudad (*)</label>
                         <input type="text"
                                class="form-control form-control-alternative"
+                               formControlName="ciudad"
                                [(ngModel)]="nuevaReferencia.ciudad"
                                name="ciudad">
                       </div>
+                      @if (formRef.get('ciudad').errors &&  formRef.get('ciudad').hasError('required') &&
+                      (formRef.get('ciudad').dirty || formRef.get('ciudad').touched)) {
+                        <label class="text-danger text-center">Este campo es obligatorio </label>
+                      }
                     </div>
                     <div class="col-lg-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-first-name">Telefono (*)</label>
                         <input type="text"
                                class="form-control form-control-alternative"
+                               formControlName="telefono"
                                [(ngModel)]="nuevaReferencia.telefono"
                                name="telefono"
                         >
                       </div>
+                      @if (formRef.get('telefono').errors &&  formRef.get('telefono').hasError('required') &&
+                      (formRef.get('telefono').dirty || formRef.get('telefono').touched)) {
+                        <label class="text-danger text-center">Este campo es obligatorio </label>
+                      }
                     </div>
 
                     <div class="col-lg-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Tipo de relación (*)</label>
                         <select id="input-rol" class="form-control form-control-alternative"
+                                formControlName="parentezco"
                                 [(ngModel)]="nuevaReferencia.parentezco"
                                 name="parentezco">
                           <option value="papa">Papá</option>
@@ -284,25 +391,34 @@
                           <option value="sobrino">Sobrino/a</option>
                         </select>
                       </div>
+                      @if (formRef.get('parentezco').errors &&  formRef.get('parentezco').hasError('required') &&
+                      (formRef.get('parentezco').dirty || formRef.get('parentezco').touched)) {
+                        <label class="text-danger text-center">Este campo es obligatorio </label>
+                      }
                     </div>
                   </div>
                 </div>
               </div>
-            }
-            @if (referencias.length !== 4 && !mostrarBotonAgregar && !mostrarBotonesGuardar) {
-              <div>
-                <p class="text-danger">Debes ingresar exactamente 4 referencias.</p>
-              </div>
-            }
-            @if (referencias.length === 4) {
-              <div>
-                <h3 class="text-">Ya se agregaron las 4 referencias, por favor debes guardarlas </h3>
-              </div>
-            }
-            @if (mostrarBotonAgregar) {
-              <div class="text-center mt-3">
-                <button type="button" class="btn btn-primary" (click)="agregarReferencia()">Agregar Referencia</button>
-              </div>
+
+              @if (referencias.length !== 4 && !mostrarBotonAgregar && !mostrarBotonesGuardar) {
+                <div>
+                  <p class="text-danger">Debes ingresar exactamente 4 referencias.</p>
+                </div>
+              }
+              @if (referencias.length === 4) {
+                <div>
+                  <h3 class="text-">Ya se agregaron las 4 referencias, por favor debes guardarlas </h3>
+                </div>
+              }
+              @if (mostrarBotonAgregar) {
+                <div class="text-center mt-3">
+                  <button type="submit" class="btn btn-primary"
+                          [disabled]="!refForm.valid">
+                    Agregar Referencia
+                  </button>
+                </div>
+              }
+              </form>
             }
             @if (isSave) {
               <div class="text-center">
@@ -329,6 +445,7 @@
         @if (showCredit) {
           <div class="card-body bg-white">
             <h6 class="heading-small mb-4">Informacion para el credito, los campos marcados con (*) son obligatorios</h6>
+            <form #cdtForm="ngForm" [formGroup]="formCDT" (ngSubmit)="cdtForm.form.valid && onSubmitSolicitudPrestamo(requesPrestamo)">
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-lg-4">
@@ -336,31 +453,54 @@
                     <label class="form-control-label" for="input-last-name"> Linea de credito (*)</label>
                     <select id="input-rol" class="form-control form-control-alternative"
                             [(ngModel)]="requesPrestamo.idlineaCredito"
-                            name="tipoDocumento">
+                            formControlName="idlineaCredito"
+                            name="idlineaCredito">
                       @for (linea of lineaCreditList; track linea.idLineaCredito){
                         <option [value]="linea.idLineaCredito"> {{ linea.nombreLineaCredito }}</option>
                       }
                     </select>
                   </div>
+                  @if (formCDT.get('idlineaCredito').errors &&  formCDT.get('idlineaCredito').hasError('required') &&
+                  (formCDT.get('idlineaCredito').dirty || formCDT.get('idlineaCredito').touched)) {
+                    <label class="text-danger text-center">Este campo es obligatorio</label>
+                  }
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="monto"> Numero de cuotas (*)</label>
-                    <input type="number" id="monto" class="form-control form-control-alternative" [(ngModel)]="requesPrestamo.plazo" name="monto">
+                    <input type="number" id="monto" class="form-control form-control-alternative"
+                           formControlName="plazo"
+                           [(ngModel)]="requesPrestamo.plazo" name="monto">
                   </div>
+                  @if (formCDT.get('plazo').errors &&  formCDT.get('plazo').hasError('required') &&
+                  (formCDT.get('plazo').dirty || formCDT.get('plazo').touched)) {
+                    <label class="text-danger text-center">Este campo es obligatorio</label>
+                  }
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="monto"> Monto a solicitar : <strong>Entre $100.000 y $5.000.000</strong> (*)</label>
-                    <input type="number" id="monto" class="form-control form-control-alternative" [(ngModel)]="requesPrestamo.monto" name="monto">
+                    <input type="number" id="monto" class="form-control form-control-alternative"
+                           formControlName="monto"
+                           [(ngModel)]="requesPrestamo.monto" name="monto">
                   </div>
+                  @if (formCDT.get('monto').errors &&  formCDT.get('monto').hasError('required') &&
+                  (formCDT.get('monto').dirty || formCDT.get('monto').touched)) {
+                    <label class="text-danger text-center">Este campo es obligatorio</label>
+                  }
                 </div>
               </div>
               <div class="col-lg-12">
               <div class="form-group">
                 <label class="form-control-label" for="monto">  <strong>Descripcion el credito solicitado (*)</strong></label>
-                <input type="text" id="monto" class="form-control form-control-alternative" [(ngModel)]="requesPrestamo.descripcionCredito" name="monto">
+                <input type="text" id="monto" class="form-control form-control-alternative"
+                       formControlName="descripcionCredito"
+                          [(ngModel)]="requesPrestamo.descripcionCredito" name="descripcionCredito" >
               </div>
+                @if (formCDT.get('descripcionCredito').errors &&  formCDT.get('descripcionCredito').hasError('required') &&
+                (formCDT.get('descripcionCredito').dirty || formCDT.get('descripcionCredito').touched)) {
+                  <label class="text-danger text-center">Este campo es obligatorio</label>
+                }
              </div>
             </div>
             @if(isLoading){
@@ -375,9 +515,10 @@
             }
             <div class="text-center mt-3">
 
-              <button type="button" class="btn btn-outline-success my-4 ml-2" (click)="onSubmitSolicitudPrestamo(requesPrestamo)"
-                      [disabled]="!ifFormSolCredito()">Solicitar credito </button>
+              <button type="submit" class="btn btn-success my-4 ml-2"
+                      [disabled]="!cdtForm.form.valid">Solicitar credito</button>
             </div>
+            </form>
           </div>
         }
 
