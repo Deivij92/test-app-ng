@@ -126,6 +126,7 @@
           </div>
         </div>
       </div>
+      <br>
       @if (isLoading) {
         <div class="text-center">
           <i class="fas fa-spinner fa-spin"></i>
@@ -136,7 +137,7 @@
           <a style="font-size: 25px"><strong>{{ mensajeInfo }}</strong></a>
         </div>
       }
-      @if(validateInfoLab){
+      @if(!validateInfoLab){
         <div class="text-center mt-3">
           <button type="button" class="btn btn-outline-danger my-4 ml-2" style="margin-right: 8px"
                   (click)="cancelar()"
@@ -177,7 +178,7 @@
             <div class="form-group">
               <label class="form-control-label" for="input-last-name">Tipo de documento (*)</label>
               <select id="input-rol" class="form-control form-control-alternative"
-                      [(ngModel)]="infoCliente.tipoDocumento"
+                      [(ngModel)]="clienteInfo.tipoDocumento"
                       name="tipoDocumento">
                 <option value="CC">Cedula de ciudadania</option>
                 <option value="CE">Cedula de extanjeria</option>
@@ -191,7 +192,7 @@
               <label class="form-control-label" for="input-first-name">Numero de documento (*)</label>
               <input type="text"
                      class="form-control form-control-alternative"
-                     [(ngModel)]="infoCliente.numeroDocumento"
+                     [(ngModel)]="clienteInfo.numeroDocumento"
                      name="numeroDocumento"> <!-- Agrega el atributo name -->
             </div>
 
@@ -201,7 +202,7 @@
               <label class="form-control-label" for="input-last-name">Nombres y apellidos (*)</label>
               <input type="text" id="input-last-name"
                      class="form-control form-control-alternative"
-                     [(ngModel)]="infoCliente.apellidos"
+                     [(ngModel)]="clienteInfo.apellidos"
                      name="apellidos">
             </div>
           </div>
@@ -212,7 +213,7 @@
               <label class="form-control-label" for="input-first-name">Direccion residencia (*)</label>
               <input type="text"
                      class="form-control form-control-alternative"
-                     [(ngModel)]="infoCliente.residencia"
+                     [(ngModel)]="clienteInfo.residencia"
                      name="residencia">
             </div>
           </div>
@@ -221,7 +222,7 @@
               <label class="form-control-label" for="input-first-name">Ciudad (*)</label>
               <input type="text"
                      class="form-control form-control-alternative"
-                     [(ngModel)]="infoCliente.ciudad"
+                     [(ngModel)]="clienteInfo.ciudad"
                      name="ciudad">
             </div>
           </div>
@@ -230,7 +231,7 @@
               <label class="form-control-label" for="input-first-name">Telefono (*)</label>
               <input type="text"
                      class="form-control form-control-alternative"
-                     [(ngModel)]="infoCliente.telefono"
+                     [(ngModel)]="clienteInfo.telefono"
                      name="telefono"
               >
             </div>
@@ -240,12 +241,13 @@
               <label class="form-control-label" for="input-first-name">Correo electronico (*)</label>
               <input type="email"
                      class="form-control form-control-alternative"
-                     [(ngModel)]="infoCliente.email"
+                     [(ngModel)]="clienteInfo.email"
                      name="email">
             </div>
           </div>
         </div>
       </div>
+      <br>
       @if (isLoading) {
         <div class="text-center">
           <i class="fas fa-spinner fa-spin"></i>
@@ -261,10 +263,10 @@
                (click)="cancelar()" >Cancelar
         </button>
         <button type="button" class="btn btn-outline-success my-4 ml-2" style="margin-right: 5px"
-               (click)="updateCliente(infoCliente)" >Actualizar cliente
+               (click)="updateCliente(clienteInfo)" >Actualizar cliente
         </button>
         <button type="button" class="btn btn-outline-danger my-4 ml-2"
-               (click)="ElimianCliente(infoCliente.id)" >Eliminar
+               (click)="ElimianCliente(clienteInfo.id)" >Eliminar
         </button>
       </div>
     </div>
@@ -301,7 +303,7 @@
               <tbody>
                 @if(referencias.length === 0){
                   <tr>
-                    <td colspan="8" class="text-center">No hay prestamos para el cliente</td>
+                    <td colspan="8" class="text-center">No hay referencias para el cliente</td>
                   </tr>
                 }
                 @for (item of referencias; track item){
@@ -336,7 +338,8 @@
                 }
               </tbody>
             </table>
-            @if (isLoading) {
+            <br>
+      @if (isLoading) {
               <div class="text-center">
                 <i class="fas fa-spinner fa-spin"></i>
               </div>
@@ -383,8 +386,8 @@
                   <tr>
                     <td colspan="8" class="text-center"><strong>No hay prestamos para el cliente </strong>
                       <button class="btn my-4 btn-outline-primary btn-sm"
-                              type="submit" style="margin-right: 8px"
-                            (click)="ShowNuevoPrestamo()">
+                                        type="submit" style="margin-right: 8px"
+                                        (click)="ShowNuevoPrestamo()">
                                     <span title="Editar categoria">
                                         <i class="fas fa-eye" style="font-size: 15px;"></i>
                                     </span> Crear nuevo prestamo
@@ -407,7 +410,8 @@
                 }
               </tbody>
             </table>
-            @if (isLoading) {
+            <br>
+      @if (isLoading) {
               <div class="text-center">
                 <i class="fas fa-spinner fa-spin"></i>
               </div>
@@ -575,7 +579,8 @@
         </div>
       </div>
     <br>
-    @if (isLoading) {
+    <br>
+      @if (isLoading) {
       <div class="text-center">
         <i class="fas fa-spinner fa-spin"></i>
       </div>
@@ -591,7 +596,7 @@
                 (click)="cancelar()"
         >Cancelar
         </button>
-        @if(cantReferencias){
+        @if(!isReference){
           <button type="button" class="btn btn-outline-success my-4 ml-2"
                   [disabled]="!ifForrmValidRef()" (click)="agregarReferencia(); crearinfoRefencia(infoRefencia)" >Guardar Nueva Referencia
           </button>

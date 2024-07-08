@@ -1,4 +1,5 @@
 export class InfoLaboralClienteDto {
+  actionType?: string;
   idInfoLab?: number;
   nitEmpresa?: string;
   nombreEmpresa?: string;

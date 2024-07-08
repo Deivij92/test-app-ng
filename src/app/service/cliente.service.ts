@@ -15,23 +15,22 @@ export class ClienteService {
   urlBackEnd = 'http://localhost:9092/api/dinerofacil/';
   constructor(private http: HttpClient) {
   }
-
-  crearCliente(request: Cliente): Observable<ResponseDto>{
-    return this.http.post<ResponseDto>(this.urlBackEnd +'crear', request);
+  crudClientes(request: Cliente): Observable<ResponseDto>{
+    return this.http.post<ResponseDto>(this.urlBackEnd +'cliente-crud', request);
   }
 
-  crearInfoLaboral(request: InfoLaboralClienteDto): Observable<ResponseDto>{
-    return this.http.post<ResponseDto>(this.urlBackEnd +'add-inf-lab', request);
+  InfoLabCrud(request: InfoLaboralClienteDto): Observable<ResponseDto>{
+    return this.http.post<ResponseDto>(this.urlBackEnd +'cliente-lab', request);
   }
 
-  crearReferencias(request: ReferenciasDto): Observable<ResponseDto>{
-    return this.http.post<ResponseDto>(this.urlBackEnd +'add-referencias', request);
+  ReferenciasCrud(request: ReferenciasDto[]): Observable<ResponseDto>{
+    return this.http.post<ResponseDto>(this.urlBackEnd +'cliente-ref-crud', request);
+  }
+  updateInfoLaborar(request: InfoLaboralClienteDto): Observable<ResponseDto>{
+    return this.http.post<ResponseDto>(this.urlBackEnd + 'updateinfolab',request);
   }
   guardarReferencias(referencias: ReferenciasDto[]): Observable<ResponseDto> {
     return this.http.post<ResponseDto>(this.urlBackEnd+ 'add-referencias', referencias);
-  }
-  listarClientes(): Observable<Cliente[]>{
-    return this.http.post<Cliente[]>(this.urlBackEnd + 'listarcliente', null);
   }
 
   obetnerInfoLaboral(idcliente:number | undefined): Observable<InfoLaboralClienteDto>{
@@ -46,9 +45,6 @@ export class ClienteService {
   obetnerInfoReferencias(idref:number | undefined): Observable<ReferenciasDto>{
     return this.http.get<ReferenciasDto>(`${this.urlBackEnd}referencia/${idref}`);
   }
-  obetnerInfoCliente(idcliente:number | undefined): Observable<Cliente>{
-    return this.http.get<Cliente>(`${this.urlBackEnd}${idcliente}`);
-  }
   eliminarInfoCliente(idcliente:number | undefined): Observable<ResponseDto>{
     return this.http.delete<ResponseDto>(`${this.urlBackEnd}${idcliente}`);
   }
@@ -57,12 +53,6 @@ export class ClienteService {
   }
   eliminarInfoRef(idlab:number | undefined): Observable<ResponseDto>{
     return this.http.delete<ResponseDto>(`${this.urlBackEnd}${idlab}/laboral`);
-  }
-  updateInfoLaborar(request: InfoLaboralClienteDto): Observable<ResponseDto>{
-    return this.http.post<ResponseDto>(this.urlBackEnd + 'updateinfolab',request);
-  }
-  updateInfoCliente(request: Cliente): Observable<ResponseDto>{
-    return this.http.post<ResponseDto>(this.urlBackEnd + 'actualizar',request);
   }
   eliminarReferencia(idRef: number| undefined): Observable<ResponseDto> {
     return this.http.delete<ResponseDto>(`${this.urlBackEnd}deleteref/${idRef}`);

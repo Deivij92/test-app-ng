@@ -121,9 +121,9 @@ export class SolicitudesComponent implements OnInit {
     debugger
     this.isLoading = true;
     let dataSend = new Cliente();
-    let dataSendInfoLab = new InfoLaboralClienteDto();
     dataSend = cliente
-    this.service.crearCliente(dataSend).subscribe(
+    dataSend.actionType = "CREATE"
+    this.service.crudClientes(dataSend).subscribe(
       (response: ResponseDto) => {
         this.isLoading = true;
         this.isSave = true;
@@ -167,7 +167,8 @@ export class SolicitudesComponent implements OnInit {
     let dataSendInfoLab = new InfoLaboralClienteDto();
     dataSendInfoLab = infoLaboral;
     dataSendInfoLab.idcliente = this.idCliente;
-    this.service.crearInfoLaboral(dataSendInfoLab).subscribe(
+    dataSendInfoLab.actionType = "CREATE";
+    this.service.InfoLabCrud(dataSendInfoLab).subscribe(
       (response: ResponseDto) => {
         this.isLoading = true;
         this.isSave = true;
@@ -198,6 +199,7 @@ export class SolicitudesComponent implements OnInit {
   }
 
   nuevaReferencia: ReferenciasDto = {
+    actionType: '',
     tipoDocumento: '',
     numeroDocumento: '',
     nombresApellidos: '',
@@ -214,7 +216,7 @@ export class SolicitudesComponent implements OnInit {
     if (this.referencias.length === 0) {
       this.nuevaReferencia.idcliente = this.idCliente; // Ajusta este valor según sea necesario
     }
-
+    this.nuevaReferencia.actionType = "CREATE";
     // Contar cuántas referencias con cada parentesco existen
     const amigosCount = this.referencias.filter(ref => ref.parentezco === 'amigo').length;
     const otrsCount = this.referencias.filter(ref => ref.parentezco !== 'amigo').length;
@@ -259,7 +261,7 @@ export class SolicitudesComponent implements OnInit {
   onSubmitReferencias(event: any) {
     console.log('Guardando referencias:', this.referencias);
     if (this.referencias.length === 4) {
-      this.service.guardarReferencias(this.referencias)
+      this.service.ReferenciasCrud(this.referencias)
         .subscribe(
           (response: ResponseDto) => {
             this.isLoading = true;
@@ -358,11 +360,6 @@ export class SolicitudesComponent implements OnInit {
       }
     );
   }
-
-  onSubmit(form: FormGroup): void {
-    console.log(form.value);
-  }
-
   emailValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const emailRegexp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;

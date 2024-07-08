@@ -1,4 +1,5 @@
 export class ReferenciasDto {
+  actionType?: string;
   tipoDocumento?: string ;
   numeroDocumento?: string ;
   nombresApellidos?: string ;
